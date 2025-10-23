@@ -1,23 +1,52 @@
-﻿<Window x:Class="LoomamaaApp.AddAnimalWindow"
+<Window x:Class="LoomamaaApp.AddAnimalWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Liisa loom" Height="250" Width="300">
-    <StackPanel Margin="10">
-        <TextBlock Text="Nimi :"/>
-        <TextBox x:Name="NameTextBox" Margin="0,0,0,5"/>
+        Title="Lisa loom" Height="300" Width="320"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
 
-        <TextBlock Text="Vanus:"/>
-        <TextBox x:Name="AgeTextBox" Margin="0,0,0,5"/>
+	<StackPanel Margin="15">
+		
+		<TextBlock Text="Lisa Uus Loom"
+                   FontWeight="Bold"
+                   FontSize="16"
+                   Margin="0,0,0,10"
+                   HorizontalAlignment="Center"/>
 
-        <TextBlock Text="Tüüp:"/>
-        <ComboBox x:Name="TypeComboBox" Margin="0,0,0,10">
-            <ComboBoxItem Content="Cat"/>
-            <ComboBoxItem Content="Dog"/>
-            <ComboBoxItem Content="Monkey"/>
-            <ComboBoxItem Content="Sheep"/>
-            <ComboBoxItem Content="Pig"/>
-        </ComboBox>
+		
+		<TextBlock Text="Nimi:" FontWeight="SemiBold"/>
+		<TextBox x:Name="NameTextBox"
+                 Margin="0,0,0,8"
+                 ToolTip="Enter animal name"/>
 
-        <Button Content="Liisa" Click="AddButton_Click"/>
-    </StackPanel>
+		
+		<TextBlock Text="Vanus:" FontWeight="SemiBold"/>
+		<TextBox x:Name="AgeTextBox"
+                 Margin="0,0,0,8"
+                 ToolTip="Enter animal age (number only)"/>
+
+		
+		<TextBlock Text="Tüüp:" FontWeight="SemiBold"/>
+		<ComboBox x:Name="TypeComboBox"
+                  Margin="0,0,0,15"
+                  ToolTip="Select animal type">
+			<ComboBoxItem Content="Cat"/>
+			<ComboBoxItem Content="Dog"/>
+			<ComboBoxItem Content="Monkey"/>
+			<ComboBoxItem Content="Sheep"/>
+			<ComboBoxItem Content="Pig"/>
+			<ComboBoxItem Content="Horse"/>
+			<ComboBoxItem Content="Duck"/>
+			<ComboBoxItem Content="Bear"/>
+		</ComboBox>
+
+		
+		<Button Content="Lisa loom"
+                Click="AddButton_Click"
+                Background="#FF91C788"
+                Padding="6"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                Width="100"/>
+	</StackPanel>
 </Window>
