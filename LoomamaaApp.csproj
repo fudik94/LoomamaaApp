@@ -71,8 +71,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Klassid\Animal.cs" />
+    <Compile Include="Klassid\Bear.cs" />
     <Compile Include="Klassid\Cat.cs" />
     <Compile Include="Klassid\Dog.cs" />
+    <Compile Include="Klassid\Duck.cs" />
+    <Compile Include="Klassid\Horse.cs" />
     <Compile Include="Klassid\ICrazyAction.cs" />
     <Compile Include="Klassid\Monkey.cs" />
     <Compile Include="Klassid\Pig.cs" />
@@ -109,10 +112,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Sounds\bear.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sounds\cat.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sounds\dog.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\duck.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\horse.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sounds\monkey.wav">

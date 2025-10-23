@@ -7,48 +7,81 @@ namespace LoomamaaApp
 {
     public partial class AddAnimalWindow : Window
     {
-        // Property to store the new animal created in this window
+        // Stores the newly created animal from this window
         public Animal NewAnimal { get; private set; }
 
         public AddAnimalWindow()
         {
-            InitializeComponent(); // Initialize the UI components
+            InitializeComponent(); // Initialize the ui
         }
 
-        // This method is called when the "Add" button is clicked
+        // Called when the add button is clic
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the name entered by the user
+            // Get and validate name
             string name = NameTextBox.Text.Trim();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("Please enter a valid name!", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            // Try to parse the age; show message if invalid
+            // Get and validate age
             if (!int.TryParse(AgeTextBox.Text.Trim(), out int age))
             {
-                MessageBox.Show("Введите корректный возраст!"); // Invalid age
+                MessageBox.Show("Please enter a valid number for age!", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Check if a type of animal is selected
+            if (age <= 0 || age > 100)
+            {
+                MessageBox.Show("Age must be between 1 and 100!", "Invalid Age", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Check that animal type is selected
             if (TypeComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Выберите тип животного!"); // No type selected
+                MessageBox.Show("Please select an animal type!", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Get the selected animal type from the ComboBox
+            // Get selected type
             string type = ((ComboBoxItem)TypeComboBox.SelectedItem).Content.ToString();
 
-            // Create the corresponding animal object based on type
+            // Create the corresponding animal object
             switch (type)
             {
-                case "Cat": NewAnimal = new Cat(name, age); break;
-                case "Dog": NewAnimal = new Dog(name, age); break;
-                case "Monkey": NewAnimal = new Monkey(name, age); break;
-                case "Sheep": NewAnimal = new Sheep(name, age); break;
-                case "Pig": NewAnimal = new Pig(name, age); break;
+                case "Cat":
+                    NewAnimal = new Cat(name, age);
+                    break;
+                case "Dog":
+                    NewAnimal = new Dog(name, age);
+                    break;
+                case "Monkey":
+                    NewAnimal = new Monkey(name, age);
+                    break;
+                case "Sheep":
+                    NewAnimal = new Sheep(name, age);
+                    break;
+                case "Pig":
+                    NewAnimal = new Pig(name, age);
+                    break;
+                case "Horse":
+                    NewAnimal = new Horse(name, age);
+                    break;
+                case "Duck":
+                    NewAnimal = new Duck(name, age);
+                    break;
+                case "Bear":
+                    NewAnimal = new Bear(name, age);
+                    break;
+                default:
+                    MessageBox.Show("Unknown animal type!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
             }
 
-            // Close the window and set DialogResult to true so MainWindow knows an animal was created
+            // If animal successfully created, close the window
             this.DialogResult = true;
             this.Close();
         }

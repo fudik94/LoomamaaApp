@@ -25,13 +25,13 @@
             <TextBox x:Name="FoodTextBox" Width="200" Margin="0,0,0,5"/>
 
             <WrapPanel Margin="0,5,0,5">
-                <Button Content="Tee hääl 🎶" Click="MakeSoundButton_Click" Margin="0,0,5,0"/>
-                <Button Content="Toida 🍖 " Click="FeedButton_Click" Margin="0,0,5,0"/>
+                <Button Content="Tee hääl 🎶" Click="MakeSoundButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="Toida 🍖 " Click="FeedButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
             </WrapPanel>
             <WrapPanel Margin="0,5,0,5">
-                <Button Content="Lisa loom ➕ " Click="AddAnimalButton_Click" Margin="0,0,5,0"/>
-                <Button Content="Eemalda loom ❌ " Click="RemoveAnimalButton_Click" Margin="0,0,5,0"/>
-                <Button Content="Crazy Action 🎉 " Click="CrazyActionButton_Click"/>
+                <Button Content="Lisa loom ➕ " Click="AddAnimalButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="Eemalda loom ❌ " Click="RemoveAnimalButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content= "Crazy Action 🎉 " Background="#FF91C788" Click="CrazyActionButton_Click"/>
             </WrapPanel>
         </StackPanel>
 
