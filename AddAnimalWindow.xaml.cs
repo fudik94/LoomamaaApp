@@ -1,4 +1,4 @@
-﻿using LoomamaaApp.Klassid;
+using LoomamaaApp.Klassid;
 using System;
 using System.Windows;
 using System.Windows.Controls;
