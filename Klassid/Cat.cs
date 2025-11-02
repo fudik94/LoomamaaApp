@@ -8,14 +8,11 @@ namespace LoomamaaApp.Klassid
 
         public override string MakeSound()
         {
-            
-            
-
             SoundPlayer player = new SoundPlayer("Sounds/cat.wav");
             player.Play();
-            return "Meow!";
+            return Properties.Resources.Cat_Sound;
         }
 
-        public string ActCrazy() => $"{Name} varastas köögist juustu!";
+        public string ActCrazy() => string.Format(Properties.Resources.Cat_ActCrazy, Name);
     }
 }

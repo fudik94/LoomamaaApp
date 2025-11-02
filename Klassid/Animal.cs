@@ -1,22 +1,61 @@
-﻿namespace LoomamaaApp.Klassid
-{
-    public abstract class Animal
-    {
-        public string Name { get; set; }
-        public int Age { get; set; }
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-        public Animal(string name, int age)
+namespace LoomamaaApp.Klassid
+{
+    // Base class for all animals with property change notifications
+    public abstract class Animal : INotifyPropertyChanged
+    {
+        private string name;
+        private int age;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propName = null)
         {
-            Name = name;
-            Age = age;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public virtual string Describe() => $"{Name}, {Age} aastat vana";
+        // Animal name
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (name == value) return;
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Animal age
+        public int Age
+        {
+            get => age;
+            set
+            {
+                if (age == value) return;
+                age = value;
+                OnPropertyChanged();
+            }
+        }
+
+        protected Animal(string name, int age)
+        {
+            this.name = name;
+            this.age = age;
+        }
+
+        // Description of the animal
+        public virtual string Describe() => $"{Name}, {Age} years old";
+
+        // Each animal must implement its sound
         public abstract string MakeSound();
 
-        public override string ToString()
-        {
-            return $"{Name} {this.GetType().Name}";
-        }
+        // Name of the animal type (Cat, Dog, etc.)
+        public string TypeName => this.GetType().Name;
+
+        // For debugging or simple display
+        public override string ToString() => $"{Name} {TypeName}";
     }
 }

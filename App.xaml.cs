@@ -8,9 +8,8 @@ using System.Windows;
 
 namespace LoomamaaApp
 {
-    /// <summary>
-    /// Логика взаимодействия для App.xaml
-    /// </summary>
+    /// logic kind of
+    
     public partial class App : Application
     {
     }

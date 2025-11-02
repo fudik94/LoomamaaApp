@@ -10,9 +10,9 @@ namespace LoomamaaApp.Klassid
         {
             SoundPlayer player = new SoundPlayer("Sounds/sheep.wav");
             player.Play();
-            return "Baa!";
+            return Properties.Resources.Sheep_Sound;
         }
 
-        public string ActCrazy() => $"{Name} jooksis ringi nagu hull lammas!";
+        public string ActCrazy() => string.Format(Properties.Resources.Sheep_ActCrazy, Name);
     }
 }

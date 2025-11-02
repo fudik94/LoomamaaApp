@@ -1,4 +1,4 @@
-﻿using System.Media;
+﻿    using System.Media;
 
 namespace LoomamaaApp.Klassid
 {
@@ -10,9 +10,9 @@ namespace LoomamaaApp.Klassid
         {
             SoundPlayer player = new SoundPlayer("Sounds/dog.wav");
             player.Play();
-            return "Woof!";
+            return Properties.Resources.Dog_Sound;
         }
 
-        public string ActCrazy() => $"{Name} haugub 5 korda järjest: Woof! Woof! Woof! Woof! Woof!";
+        public string ActCrazy() => string.Format(Properties.Resources.Dog_ActCrazy, Name);
     }
 }

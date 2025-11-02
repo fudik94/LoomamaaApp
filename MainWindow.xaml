@@ -1,7 +1,8 @@
 <Window x:Class="LoomamaaApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="LoomamaaApp" Height="450" Width="800">
+        xmlns:resx="clr-namespace:LoomamaaApp.Properties"
+        Title="{x:Static resx:Resources.AppTitle}" Height="450" Width="800">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -16,22 +17,22 @@
                  SelectionChanged="AnimalsListBox_SelectionChanged"/>
 
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="5" VerticalAlignment="Top">
-            <TextBlock Text="Nimi :" FontWeight="Bold"/>
+            <TextBlock Text="{x:Static resx:Resources.NameLabel}" FontWeight="Bold"/>
             <TextBlock x:Name="NameTextBlock" Margin="0,0,0,5"/>
-            <TextBlock Text="Vanus :" FontWeight="Bold"/>
+            <TextBlock Text="{x:Static resx:Resources.AgeLabel}" FontWeight="Bold"/>
             <TextBlock x:Name="AgeTextBlock" Margin="0,0,0,10"/>
 
-            <TextBlock Text="Tooge toit :" FontWeight="Bold"/>
+            <TextBlock Text="{x:Static resx:Resources.FoodLabel}" FontWeight="Bold"/>
             <TextBox x:Name="FoodTextBox" Width="200" Margin="0,0,0,5"/>
 
             <WrapPanel Margin="0,5,0,5">
-                <Button Content="Tee hääl 🎶" Click="MakeSoundButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
-                <Button Content="Toida 🍖 " Click="FeedButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="{x:Static resx:Resources.MakeSoundButton}" Click="MakeSoundButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="{x:Static resx:Resources.FeedButton}" Click="FeedButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
             </WrapPanel>
             <WrapPanel Margin="0,5,0,5">
-                <Button Content="Lisa loom ➕ " Click="AddAnimalButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
-                <Button Content="Eemalda loom ❌ " Click="RemoveAnimalButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
-                <Button Content= "Crazy Action 🎉 " Background="#FF91C788" Click="CrazyActionButton_Click"/>
+                <Button Content="{x:Static resx:Resources.AddAnimalButton}" Click="AddAnimalButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="{x:Static resx:Resources.RemoveAnimalButton}" Click="RemoveAnimalButton_Click" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="{x:Static resx:Resources.CrazyActionButton}" Background="#FF91C788" Click="CrazyActionButton_Click"/>
             </WrapPanel>
         </StackPanel>
 

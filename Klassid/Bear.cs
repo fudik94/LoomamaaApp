@@ -9,12 +9,12 @@ namespace LoomamaaApp.Klassid
         public override string MakeSound()
         {
             PlaySound("Sounds/bear.wav");
-            return "Grrrrr!";
+            return Properties.Resources.Bear_Sound;
         }
 
         public string ActCrazy()
         {
-            return $"{Name} rolled on the ground and scared everyone! ";
+            return string.Format(Properties.Resources.Bear_ActCrazy, Name);
         }
 
         private void PlaySound(string filePath)
@@ -26,7 +26,7 @@ namespace LoomamaaApp.Klassid
             }
             catch
             {
-                // ignore missing sound file
+                
             }
         }
     }

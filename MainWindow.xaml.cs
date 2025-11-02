@@ -6,46 +6,40 @@ namespace LoomamaaApp
 {
     public partial class MainWindow : Window
     {
-        // ObservableCollection allows the ListBox to automatically update when items are added or removed
+        // Collection of animals
         private ObservableCollection<Animal> animals = new ObservableCollection<Animal>();
+
+        // Log entries, newest first
+        private ObservableCollection<string> logs = new ObservableCollection<string>();
 
         public MainWindow()
         {
             InitializeComponent();
-            // Bind the ListBox to the animals collection
             AnimalsListBox.ItemsSource = animals;
+            LogListBox.ItemsSource = logs;
 
-            // Add some initial animals to the list
+            // Initial animals
             animals.Add(new Cat("Muri", 3));
             animals.Add(new Dog("Sharik", 5));
         }
 
-        // Update the detail panel when a different animal is selected
-        private void AnimalsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        // Add log entry at the top
+        private void AddLog(string message)
         {
-            if (AnimalsListBox.SelectedItem is Animal selectedAnimal)
-            {
-                NameTextBlock.Text = selectedAnimal.Name; // display the animal's name
-                AgeTextBlock.Text = selectedAnimal.Age.ToString(); // display the animal's age
-            }
-            else
-            {
-                NameTextBlock.Text = "";
-                AgeTextBlock.Text = "";
-            }
+            logs.Insert(0, message);
+            if (LogListBox.Items.Count > 0)
+                LogListBox.ScrollIntoView(LogListBox.Items[0]);
         }
 
-        // Make the selected animal sound and log it
         private void MakeSoundButton_Click(object sender, RoutedEventArgs e)
         {
             if (AnimalsListBox.SelectedItem is Animal selectedAnimal)
             {
-                string sound = selectedAnimal.MakeSound(); // call the animal's MakeSound method
-                LogListBox.Items.Add($"{selectedAnimal.Name} ütles: {sound}"); // add result to log
+                string sound = selectedAnimal.MakeSound();
+                AddLog(string.Format(Properties.Resources.LogSaidFormat, selectedAnimal.Name, sound));
             }
         }
 
-        // Feed the selected animal with the text from the TextBox and log the action
         private void FeedButton_Click(object sender, RoutedEventArgs e)
         {
             if (AnimalsListBox.SelectedItem is Animal selectedAnimal)
@@ -53,23 +47,21 @@ namespace LoomamaaApp
                 string food = FoodTextBox.Text.Trim();
                 if (!string.IsNullOrEmpty(food))
                 {
-                    LogListBox.Items.Add($"{selectedAnimal.Name} sõi {food}"); // add feeding info to log
-                    FoodTextBox.Clear(); // clear the input after feeding
+                    AddLog(string.Format(Properties.Resources.LogAteFormat, selectedAnimal.Name, food));
+                    FoodTextBox.Clear();
                 }
             }
         }
 
-        // Open the AddAnimalWindow to create a new animal
         private void AddAnimalButton_Click(object sender, RoutedEventArgs e)
         {
             AddAnimalWindow addWindow = new AddAnimalWindow();
             if (addWindow.ShowDialog() == true && addWindow.NewAnimal != null)
             {
-                animals.Add(addWindow.NewAnimal); // add the new animal to the collection
+                animals.Insert(0, addWindow.NewAnimal); // add new animal at top
             }
         }
 
-        // Remove the selected animal from the list
         private void RemoveAnimalButton_Click(object sender, RoutedEventArgs e)
         {
             if (AnimalsListBox.SelectedItem is Animal selectedAnimal)
@@ -78,17 +70,21 @@ namespace LoomamaaApp
             }
         }
 
-        // Perform the "crazy action" of the selected animal if it implements ICrazyAction
         private void CrazyActionButton_Click(object sender, RoutedEventArgs e)
         {
             if (AnimalsListBox.SelectedItem is ICrazyAction crazyAnimal)
             {
-                LogListBox.Items.Add(crazyAnimal.ActCrazy()); // add crazy action to log
+                AddLog(crazyAnimal.ActCrazy());
             }
             else if (AnimalsListBox.SelectedItem is Animal selectedAnimal)
             {
-                LogListBox.Items.Add($"{selectedAnimal.Name} ei tee crazy action."); // if no crazy action
+                AddLog(string.Format(Properties.Resources.NoCrazyActionFormat, selectedAnimal.Name));
             }
+        }
+
+        private void AnimalsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            
         }
     }
 }

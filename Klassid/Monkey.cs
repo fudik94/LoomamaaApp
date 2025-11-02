@@ -10,9 +10,9 @@ namespace LoomamaaApp.Klassid
         {
             SoundPlayer player = new SoundPlayer("Sounds/monkey.wav");
             player.Play();
-            return "Oo-oo-aa-aa!";
+            return Properties.Resources.Monkey_Sound;
         }
 
-        public string ActCrazy() => $"{Name} vahetas kahe looma nimed omavahel!";
+        public string ActCrazy() => string.Format(Properties.Resources.Monkey_ActCrazy, Name);
     }
 }

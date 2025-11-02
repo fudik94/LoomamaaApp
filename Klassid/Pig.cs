@@ -10,9 +10,9 @@ namespace LoomamaaApp.Klassid
         {
             SoundPlayer player = new SoundPlayer("Sounds/pig.wav");
             player.Play();
-            return "Oink!";
+            return Properties.Resources.Pig_Sound;
         }
 
-        public string ActCrazy() => $"{Name} veeres mudas ringi!";
+        public string ActCrazy() => string.Format(Properties.Resources.Pig_ActCrazy, Name);
     }
 }
