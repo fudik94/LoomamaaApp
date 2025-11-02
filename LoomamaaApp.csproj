@@ -55,8 +55,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Klassid\Enclosure.cs" />
+    <Compile Include="LinqWindow.xaml.cs">
+      <DependentUpon>LinqWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AnimalRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
     <Page Include="AddAnimalWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LinqWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">

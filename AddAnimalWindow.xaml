@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:resx="clr-namespace:LoomamaaApp.Properties"
         xmlns:kl="clr-namespace:LoomamaaApp.Klassid"
-        Title="{x:Static resx:Resources.AddAnimalWindowTitle}" Height="300" Width="320"
+        Title="{x:Static resx:Resources.AddAnimalWindowTitle}" Height="340" Width="320"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
 
@@ -30,7 +30,7 @@
 		
 		<TextBlock Text="{x:Static resx:Resources.AddTypeLabel}" FontWeight="SemiBold"/>
 		<ComboBox x:Name="TypeComboBox"
-                  Margin="0,0,0,15"
+                  Margin="0,0,0,8"
                   ToolTip="Select animal type">
 			<ComboBoxItem Tag="{x:Static kl:AnimalType.Cat}" Content="{x:Static resx:Resources.Combo_Cat}"/>
 			<ComboBoxItem Tag="{x:Static kl:AnimalType.Dog}" Content="{x:Static resx:Resources.Combo_Dog}"/>
@@ -42,7 +42,9 @@
 			<ComboBoxItem Tag="{x:Static kl:AnimalType.Bear}" Content="{x:Static resx:Resources.Combo_Bear}"/>
 		</ComboBox>
 
-		
+        <TextBlock Text="Voljeer:" FontWeight="SemiBold"/>
+		<ComboBox x:Name="EnclosureComboBox" Margin="0,0,0,12" DisplayMemberPath="Name"/>
+
 		<Button Content="{x:Static resx:Resources.AddButton}"
                 Click="AddButton_Click"
                 Background="#FF91C788"

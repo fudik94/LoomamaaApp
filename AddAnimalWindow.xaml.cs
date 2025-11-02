@@ -2,6 +2,7 @@ using LoomamaaApp.Klassid;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace LoomamaaApp
 {
@@ -10,9 +11,28 @@ namespace LoomamaaApp
         // New animal created in this window
         public Animal NewAnimal { get; private set; }
 
+        // Enclosure chosen by the user (set after pressing Add)
+        public Enclosure<Animal> ChosenEnclosure { get; private set; }
+
         public AddAnimalWindow()
         {
             InitializeComponent();
+        }
+
+        // New ctor to populate enclosures list and optionally preselect one
+        public AddAnimalWindow(IEnumerable<Enclosure<Animal>> enclosures, Enclosure<Animal> preselected = null)
+            : this()
+        {
+            if (enclosures != null)
+            {
+                var combo = this.FindName("EnclosureComboBox") as ComboBox;
+                if (combo != null)
+                {
+                    combo.ItemsSource = enclosures;
+                    if (preselected != null)
+                        combo.SelectedItem = preselected;
+                }
+            }
         }
 
         // Called when "Add" button is clicked
@@ -84,6 +104,10 @@ namespace LoomamaaApp
                                     MessageBoxImage.Error);
                     return;
             }
+
+            // Capture chosen enclosure (may be null)
+            var combo2 = this.FindName("EnclosureComboBox") as ComboBox;
+            ChosenEnclosure = combo2?.SelectedItem as Enclosure<Animal>;
 
             this.DialogResult = true;
             this.Close();
