@@ -45,7 +45,11 @@
                 <Button Content="{x:Static resx:Resources.RemoveAnimalButton}" Command="{Binding RemoveAnimalCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
                 <Button Content="{x:Static resx:Resources.CrazyActionButton}" Background="#FF91C788" Command="{Binding CrazyActionCommand}" Margin="0,0,5,0"/>
                 <Button Content="Night" Command="{Binding TriggerNightCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
-                <Button Content="LINQ" Command="{Binding OpenLinqCommand}" Background="#FF91C788"/>
+                <Button Content="LINQ" Command="{Binding OpenLinqCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
+            </WrapPanel>
+            <WrapPanel Margin="0,5,0,5">
+                <Button Content="Save to DB" Command="{Binding SaveToDatabaseCommand}" Background="#FF88B4D6" Margin="0,0,5,0"/>
+                <Button Content="Load from DB" Command="{Binding LoadFromDatabaseCommand}" Background="#FF88B4D6"/>
             </WrapPanel>
         </StackPanel>
 
