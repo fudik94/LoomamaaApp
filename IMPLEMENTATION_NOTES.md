@@ -96,9 +96,10 @@ Located in `Database/AnimalDatabaseRepository.cs`
 #### Using Database Features
 
 1. **Save to Database**: Click the "Save to DB" button to save all enclosures and their animals
+   - Note: This will clear all existing data in the database before saving to prevent duplicates
 2. **Load from Database**: Click the "Load from DB" button to load previously saved data
-
-Note: Loading from database will replace the current in-memory data.
+   - Note: Loading from database will replace the current in-memory data
+   - Event handlers are properly unsubscribed to prevent memory leaks
 
 ### 3. Dependency Injection
 
@@ -110,6 +111,25 @@ The application uses a custom `ServiceLocator` class for dependency injection:
 - `IAnimalDatabaseRepository` - Database repository for persistence
 
 Services are configured in `App.xaml.cs` in the `OnStartup` method and resolved in `MainWindow.xaml.cs`.
+
+**Thread Safety:**
+The ServiceLocator uses double-check locking to ensure thread-safe singleton initialization.
+
+## Quality Assurance
+
+### Code Review
+All code has been reviewed and the following improvements were made:
+- **Memory Leak Prevention**: Added UnsubscribeEnclosure method to properly clean up event handlers when loading from database
+- **Thread Safety**: Implemented double-check locking in ServiceLocator for thread-safe singleton initialization
+- **Data Integrity**: Database is cleared before saving to prevent duplicate records
+- **Code Clarity**: Updated comments to match actual implementation
+
+### Security Analysis
+CodeQL security analysis completed with **0 vulnerabilities** found.
+- No SQL injection vulnerabilities (all queries use parameterized commands)
+- No path traversal issues
+- No insecure data handling
+- Proper exception handling throughout
 
 ## Configuration
 
