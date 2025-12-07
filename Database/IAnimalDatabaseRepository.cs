@@ -11,6 +11,7 @@ namespace LoomamaaApp.Database
         IEnumerable<Enclosure<Animal>> LoadEnclosures();
         void DeleteAnimal(int id);
         void DeleteEnclosure(int id);
+        void ClearDatabase();
         void InitializeDatabase();
     }
 }

@@ -124,6 +124,13 @@ namespace LoomamaaApp.ViewModels
             enclosure.NightOccurred += Enclosure_NightOccurred;
         }
 
+        private void UnsubscribeEnclosure(Enclosure<Animal> enclosure)
+        {
+            enclosure.AnimalAdded -= Enclosure_AnimalAdded;
+            enclosure.FoodDropped -= Enclosure_FoodDropped;
+            enclosure.NightOccurred -= Enclosure_NightOccurred;
+        }
+
         private void Enclosure_AnimalAdded(object sender, AnimalEventArgs e)
         {
             var enc = sender as Enclosure<Animal>;
@@ -264,6 +271,9 @@ namespace LoomamaaApp.ViewModels
         {
             try
             {
+                // Clear existing data to prevent duplicates
+                dbRepository.ClearDatabase();
+
                 // Save all enclosures with their animals
                 foreach (var enclosure in Enclosures)
                 {
@@ -293,6 +303,12 @@ namespace LoomamaaApp.ViewModels
                 
                 if (loadedEnclosures != null && loadedEnclosures.Any())
                 {
+                    // Unsubscribe from current enclosures to prevent memory leaks
+                    foreach (var enc in Enclosures)
+                    {
+                        UnsubscribeEnclosure(enc);
+                    }
+
                     // Clear current data
                     Enclosures.Clear();
                     Animals.Clear();

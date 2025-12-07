@@ -262,7 +262,7 @@ namespace LoomamaaApp.Database
                 {
                     connection.Open();
 
-                    // Delete animals first (or set EnclosureId to NULL)
+                    // Delete animals in the enclosure
                     var deleteAnimalsQuery = @"DELETE FROM Animals WHERE EnclosureId = @Id";
                     using (var cmd = new SqlCommand(deleteAnimalsQuery, connection))
                     {
@@ -282,6 +282,36 @@ namespace LoomamaaApp.Database
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error deleting enclosure: {ex.Message}");
+                throw;
+            }
+        }
+
+        public void ClearDatabase()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Delete all animals first
+                    var deleteAnimalsQuery = @"DELETE FROM Animals";
+                    using (var cmd = new SqlCommand(deleteAnimalsQuery, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Delete all enclosures
+                    var deleteEnclosuresQuery = @"DELETE FROM Enclosures";
+                    using (var cmd = new SqlCommand(deleteEnclosuresQuery, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error clearing database: {ex.Message}");
                 throw;
             }
         }

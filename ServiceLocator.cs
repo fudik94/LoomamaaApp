@@ -5,6 +5,7 @@ namespace LoomamaaApp
 {
     public class ServiceLocator
     {
+        private static readonly object lockObject = new object();
         private static ServiceLocator instance;
         private readonly Dictionary<Type, object> services = new Dictionary<Type, object>();
         private readonly Dictionary<Type, Func<object>> factories = new Dictionary<Type, Func<object>>();
@@ -16,7 +17,13 @@ namespace LoomamaaApp
             get
             {
                 if (instance == null)
-                    instance = new ServiceLocator();
+                {
+                    lock (lockObject)
+                    {
+                        if (instance == null)
+                            instance = new ServiceLocator();
+                    }
+                }
                 return instance;
             }
         }
