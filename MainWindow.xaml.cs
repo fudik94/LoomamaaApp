@@ -8,7 +8,13 @@ namespace LoomamaaApp
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
+            
+            // Get MainViewModel from DI container
+            var logger = ServiceLocator.Instance.Resolve<Logging.ILogger>();
+            var repository = ServiceLocator.Instance.Resolve<Repositories.IRepository<Klassid.Animal>>();
+            var dbRepository = ServiceLocator.Instance.Resolve<Database.IAnimalDatabaseRepository>();
+            
+            this.DataContext = new MainViewModel(logger, repository, dbRepository);
         }
     }
 }
