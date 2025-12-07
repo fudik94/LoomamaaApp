@@ -5,6 +5,8 @@ using System.Windows.Input;
 using LoomamaaApp.Klassid;
 using System.Windows;
 using LoomamaaApp.Repositories;
+using LoomamaaApp.Logging;
+using LoomamaaApp.Database;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -13,6 +15,8 @@ namespace LoomamaaApp.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly IRepository<Animal> repository;
+        private readonly ILogger logger;
+        private readonly IAnimalDatabaseRepository dbRepository;
 
         public ObservableCollection<Animal> Animals { get; } = new ObservableCollection<Animal>();
         public ObservableCollection<string> Logs { get; } = new ObservableCollection<string>();
@@ -66,14 +70,18 @@ namespace LoomamaaApp.ViewModels
         public ICommand CrazyActionCommand { get; }
         public ICommand TriggerNightCommand { get; }
         public ICommand OpenLinqCommand { get; }
+        public ICommand SaveToDatabaseCommand { get; }
+        public ICommand LoadFromDatabaseCommand { get; }
 
-        public MainViewModel()
+        public MainViewModel(ILogger logger, IRepository<Animal> repository, IAnimalDatabaseRepository dbRepository)
         {
-            repository = new AnimalRepository();
+            this.logger = logger;
+            this.repository = repository;
+            this.dbRepository = dbRepository;
 
             // create enclosures and subscribe to events
-            var north = new Enclosure<Animal>("Põhja");
-            var south = new Enclosure<Animal>("Lõuna");
+            var north = new Enclosure<Animal>("Pï¿½hja");
+            var south = new Enclosure<Animal>("Lï¿½una");
 
             SubscribeEnclosure(north);
             SubscribeEnclosure(south);
@@ -102,6 +110,11 @@ namespace LoomamaaApp.ViewModels
             CrazyActionCommand = new RelayCommand(_ => CrazyAction(), _ => SelectedAnimal != null);
             TriggerNightCommand = new RelayCommand(_ => TriggerNight(), _ => SelectedEnclosure != null || SelectedAnimal != null);
             OpenLinqCommand = new RelayCommand(_ => OpenLinq());
+            SaveToDatabaseCommand = new RelayCommand(_ => SaveToDatabase());
+            LoadFromDatabaseCommand = new RelayCommand(_ => LoadFromDatabase());
+
+            // Log application start
+            logger.Log("Application started");
         }
 
         private void SubscribeEnclosure(Enclosure<Animal> enclosure)
@@ -111,22 +124,35 @@ namespace LoomamaaApp.ViewModels
             enclosure.NightOccurred += Enclosure_NightOccurred;
         }
 
+        private void UnsubscribeEnclosure(Enclosure<Animal> enclosure)
+        {
+            enclosure.AnimalAdded -= Enclosure_AnimalAdded;
+            enclosure.FoodDropped -= Enclosure_FoodDropped;
+            enclosure.NightOccurred -= Enclosure_NightOccurred;
+        }
+
         private void Enclosure_AnimalAdded(object sender, AnimalEventArgs e)
         {
             var enc = sender as Enclosure<Animal>;
-            AddLog($"[{enc?.Name}] Animal added: {e.Animal.Name} ({e.Animal.TypeName})");
+            var message = $"[{enc?.Name}] Animal added: {e.Animal.Name} ({e.Animal.TypeName})";
+            AddLog(message);
+            logger.Log(message);
         }
 
         private void Enclosure_FoodDropped(object sender, FoodDroppedEventArgs e)
         {
             var enc = sender as Enclosure<Animal>;
-            AddLog($"[{enc?.Name}] Food dropped: {e.Food}");
+            var message = $"[{enc?.Name}] Food dropped: {e.Food}";
+            AddLog(message);
+            logger.Log(message);
         }
 
         private void Enclosure_NightOccurred(object sender, NightEventArgs e)
         {
             var enc = sender as Enclosure<Animal>;
-            AddLog($"[{enc?.Name}] Night event: {e.Description}");
+            var message = $"[{enc?.Name}] Night event: {e.Description}";
+            AddLog(message);
+            logger.Log(message);
         }
 
         private void AddLog(string message)
@@ -138,7 +164,9 @@ namespace LoomamaaApp.ViewModels
         {
             if (SelectedAnimal == null) return;
             string sound = SelectedAnimal.MakeSound();
-            AddLog(string.Format(Properties.Resources.LogSaidFormat, SelectedAnimal.Name, sound));
+            var message = string.Format(Properties.Resources.LogSaidFormat, SelectedAnimal.Name, sound);
+            AddLog(message);
+            logger.Log(message);
         }
 
         private void Feed()
@@ -146,7 +174,9 @@ namespace LoomamaaApp.ViewModels
             if (SelectedAnimal == null) return;
             string food = FoodInput?.Trim();
             if (string.IsNullOrEmpty(food)) return;
-            AddLog(string.Format(Properties.Resources.LogAteFormat, SelectedAnimal.Name, food));
+            var message = string.Format(Properties.Resources.LogAteFormat, SelectedAnimal.Name, food);
+            AddLog(message);
+            logger.Log(message);
             FoodInput = string.Empty;
         }
 
@@ -169,12 +199,18 @@ namespace LoomamaaApp.ViewModels
                 {
                     addWindow.ChosenEnclosure.AddAnimal(addWindow.NewAnimal);
                 }
+
+                var message = $"Added new animal: {addWindow.NewAnimal.Name} ({addWindow.NewAnimal.TypeName})";
+                logger.Log(message);
             }
         }
 
         private void RemoveAnimal()
         {
             if (SelectedAnimal == null) return;
+
+            var animalName = SelectedAnimal.Name;
+            var animalType = SelectedAnimal.TypeName;
 
             // remove from repository
             repository.Remove(SelectedAnimal);
@@ -188,19 +224,26 @@ namespace LoomamaaApp.ViewModels
 
             Animals.Remove(SelectedAnimal);
             SelectedAnimal = null;
+
+            var message = $"Removed animal: {animalName} ({animalType})";
+            AddLog(message);
+            logger.Log(message);
         }
 
         private void CrazyAction()
         {
             if (SelectedAnimal == null) return;
+            string message;
             if (SelectedAnimal is ICrazyAction crazy)
             {
-                AddLog(crazy.ActCrazy());
+                message = crazy.ActCrazy();
             }
             else
             {
-                AddLog(string.Format(Properties.Resources.NoCrazyActionFormat, SelectedAnimal.Name));
+                message = string.Format(Properties.Resources.NoCrazyActionFormat, SelectedAnimal.Name);
             }
+            AddLog(message);
+            logger.Log(message);
         }
 
         private void TriggerNight()
@@ -222,6 +265,85 @@ namespace LoomamaaApp.ViewModels
             if (Application.Current?.MainWindow != null)
                 win.Owner = Application.Current.MainWindow;
             win.ShowDialog();
+        }
+
+        private void SaveToDatabase()
+        {
+            try
+            {
+                // Clear existing data to prevent duplicates
+                dbRepository.ClearDatabase();
+
+                // Save all enclosures with their animals
+                foreach (var enclosure in Enclosures)
+                {
+                    dbRepository.SaveEnclosure(enclosure);
+                }
+
+                var message = $"Saved {Enclosures.Count} enclosures to database";
+                AddLog(message);
+                logger.Log(message);
+                MessageBox.Show("Data saved to database successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (System.Exception ex)
+            {
+                var message = $"Error saving to database: {ex.Message}";
+                AddLog(message);
+                logger.Log(message);
+                MessageBox.Show($"Failed to save to database: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadFromDatabase()
+        {
+            try
+            {
+                // Load enclosures from database
+                var loadedEnclosures = dbRepository.LoadEnclosures();
+                
+                if (loadedEnclosures != null && loadedEnclosures.Any())
+                {
+                    // Unsubscribe from current enclosures to prevent memory leaks
+                    foreach (var enc in Enclosures)
+                    {
+                        UnsubscribeEnclosure(enc);
+                    }
+
+                    // Clear current data
+                    Enclosures.Clear();
+                    Animals.Clear();
+
+                    // Add loaded enclosures
+                    foreach (var enc in loadedEnclosures)
+                    {
+                        SubscribeEnclosure(enc);
+                        Enclosures.Add(enc);
+
+                        // Add animals to the main collection
+                        foreach (var animal in enc.Animals)
+                        {
+                            Animals.Add(animal);
+                            repository.Add(animal);
+                        }
+                    }
+
+                    var message = $"Loaded {Enclosures.Count} enclosures from database";
+                    AddLog(message);
+                    logger.Log(message);
+                    MessageBox.Show("Data loaded from database successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No data found in database.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                var message = $"Error loading from database: {ex.Message}";
+                AddLog(message);
+                logger.Log(message);
+                MessageBox.Show($"Failed to load from database: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
