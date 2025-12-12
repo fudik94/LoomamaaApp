@@ -51,6 +51,14 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.32">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -60,7 +68,9 @@
     <Compile Include="Logging\XmlLogger.cs" />
     <Compile Include="Logging\JsonLogger.cs" />
     <Compile Include="Database\IAnimalDatabaseRepository.cs" />
-    <Compile Include="Database\AnimalDatabaseRepository.cs" />
+    <Compile Include="Data\LoomamaaDbContext.cs" />
+    <Compile Include="Data\Repositories\EfAnimalRepository.cs" />
+    <Compile Include="Data\Repositories\EfAnimalDatabaseRepository.cs" />
     <Compile Include="ServiceLocator.cs" />
     <Compile Include="LinqWindow.xaml.cs">
       <DependentUpon>LinqWindow.xaml</DependentUpon>

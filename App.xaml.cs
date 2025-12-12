@@ -10,6 +10,9 @@ using LoomamaaApp.Logging;
 using LoomamaaApp.Database;
 using LoomamaaApp.Repositories;
 using LoomamaaApp.Klassid;
+using LoomamaaApp.Data;
+using LoomamaaApp.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace LoomamaaApp
 {
@@ -46,12 +49,21 @@ namespace LoomamaaApp
             // To use JSON logging instead, comment the line above and uncomment this:
             // container.RegisterSingleton<ILogger>(new JsonLogger("application_logs.json"));
 
-            // Register in-memory repository
-            container.RegisterSingleton<IRepository<Animal>>(new AnimalRepository());
-
-            // Register database repository
+            // Configure Entity Framework Core DbContext
             string connectionString = ConfigurationManager.ConnectionStrings["LoomamaaDB"].ConnectionString;
-            var dbRepo = new AnimalDatabaseRepository(connectionString);
+            
+            var optionsBuilder = new DbContextOptionsBuilder<LoomamaaDbContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+            
+            var dbContext = new LoomamaaDbContext(optionsBuilder.Options);
+            
+            // Register DbContext as singleton
+            container.RegisterSingleton<LoomamaaDbContext>(dbContext);
+
+            // Register EF Core repositories
+            container.RegisterSingleton<IRepository<Animal>>(new EfAnimalRepository(dbContext));
+            
+            var dbRepo = new EfAnimalDatabaseRepository(dbContext);
             
             // Initialize database on startup
             try
