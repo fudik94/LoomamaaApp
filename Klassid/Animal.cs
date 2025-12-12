@@ -9,6 +9,11 @@ namespace LoomamaaApp.Klassid
         private string name;
         private int age;
 
+        // EF Core properties
+        public int Id { get; set; }
+        public int? EnclosureId { get; set; }
+        public System.DateTime CreatedDate { get; set; } = System.DateTime.Now;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propName = null)
