@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -13,6 +12,7 @@ using LoomamaaApp.Klassid;
 using LoomamaaApp.Data;
 using LoomamaaApp.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace LoomamaaApp
 {
@@ -50,7 +50,12 @@ namespace LoomamaaApp
             // container.RegisterSingleton<ILogger>(new JsonLogger("application_logs.json"));
 
             // Configure Entity Framework Core DbContext
-            string connectionString = ConfigurationManager.ConnectionStrings["LoomamaaDB"].ConnectionString;
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            string connectionString = configuration.GetConnectionString("LoomamaaDB");
             
             var optionsBuilder = new DbContextOptionsBuilder<LoomamaaDbContext>();
             optionsBuilder.UseSqlServer(connectionString);
