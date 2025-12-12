@@ -52,10 +52,11 @@ namespace LoomamaaApp
             // Configure Entity Framework Core DbContext
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
-            string connectionString = configuration.GetConnectionString("LoomamaaDB");
+            string connectionString = configuration.GetConnectionString("LoomamaaDB") 
+                ?? throw new InvalidOperationException("Connection string 'LoomamaaDB' not found in configuration.");
             
             var optionsBuilder = new DbContextOptionsBuilder<LoomamaaDbContext>();
             optionsBuilder.UseSqlServer(connectionString);
