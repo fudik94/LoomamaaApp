@@ -1,0 +1,56 @@
+<Window x:Class="LoomamaaApp.AddAnimalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:resx="clr-namespace:LoomamaaApp.Properties"
+        xmlns:kl="clr-namespace:LoomamaaApp.Klassid"
+        Title="{x:Static resx:Resources.AddAnimalWindowTitle}" Height="340" Width="320"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+	<StackPanel Margin="15">
+		
+		<TextBlock Text="{x:Static resx:Resources.AddAnimalHeader}"
+                   FontWeight="Bold"
+                   FontSize="16"
+                   Margin="0,0,0,10"
+                   HorizontalAlignment="Center"/>
+
+		
+		<TextBlock Text="{x:Static resx:Resources.AddNameLabel}" FontWeight="SemiBold"/>
+		<TextBox x:Name="NameTextBox"
+                 Margin="0,0,0,8"
+                 ToolTip="Enter animal name"/>
+
+		
+		<TextBlock Text="{x:Static resx:Resources.AddAgeLabel}" FontWeight="SemiBold"/>
+		<TextBox x:Name="AgeTextBox"
+                 Margin="0,0,0,8"
+                 ToolTip="Enter animal age (number only)"/>
+
+		
+		<TextBlock Text="{x:Static resx:Resources.AddTypeLabel}" FontWeight="SemiBold"/>
+		<ComboBox x:Name="TypeComboBox"
+                  Margin="0,0,0,8"
+                  ToolTip="Select animal type">
+			<ComboBoxItem Tag="{x:Static kl:AnimalType.Cat}" Content="{x:Static resx:Resources.Combo_Cat}"/>
+			<ComboBoxItem Tag="{x:Static kl:AnimalType.Dog}" Content="{x:Static resx:Resources.Combo_Dog}"/>
+			<ComboBoxItem Tag="{x:Static kl:AnimalType.Monkey}" Content="{x:Static resx:Resources.Combo_Monkey}"/>
+			<ComboBoxItem Tag="{x:Static kl:AnimalType.Sheep}" Content="{x:Static resx:Resources.Combo_Sheep}"/>
+			<ComboBoxItem Tag="{x:Static kl:AnimalType.Pig}" Content="{x:Static resx:Resources.Combo_Pig}"/>
+			<ComboBoxItem Tag="{x:Static kl:AnimalType.Horse}" Content="{x:Static resx:Resources.Combo_Horse}"/>
+			<ComboBoxItem Tag="{x:Static kl:AnimalType.Duck}" Content="{x:Static resx:Resources.Combo_Duck}"/>
+			<ComboBoxItem Tag="{x:Static kl:AnimalType.Bear}" Content="{x:Static resx:Resources.Combo_Bear}"/>
+		</ComboBox>
+
+        <TextBlock Text="Voljeer:" FontWeight="SemiBold"/>
+		<ComboBox x:Name="EnclosureComboBox" Margin="0,0,0,12" DisplayMemberPath="Name"/>
+
+		<Button Content="{x:Static resx:Resources.AddButton}"
+                Click="AddButton_Click"
+                Background="#FF91C788"
+                Padding="6"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                Width="100"/>
+	</StackPanel>
+</Window>

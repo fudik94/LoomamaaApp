@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- UI -->
+  <data name="AppTitle" xml:space="preserve"><value>LoomamaaApp</value></data>
+  <data name="NameLabel" xml:space="preserve"><value>Nimi :</value></data>
+  <data name="AgeLabel" xml:space="preserve"><value>Vanus :</value></data>
+  <data name="FoodLabel" xml:space="preserve"><value>Tooge toit :</value></data>
+  <data name="MakeSoundButton" xml:space="preserve"><value>Tee hääl 🎶</value></data>
+  <data name="FeedButton" xml:space="preserve"><value>Toida 🍖</value></data>
+  <data name="AddAnimalButton" xml:space="preserve"><value>Lisa loom ➕</value></data>
+  <data name="RemoveAnimalButton" xml:space="preserve"><value>Eemalda loom ❌</value></data>
+  <data name="CrazyActionButton" xml:space="preserve"><value>Crazy Action 🎉</value></data>
+
+  <!-- AddAnimalWindow -->
+  <data name="AddAnimalWindowTitle" xml:space="preserve"><value>Lisa loom</value></data>
+  <data name="AddAnimalHeader" xml:space="preserve"><value>Lisa Uus Loom</value></data>
+  <data name="AddNameLabel" xml:space="preserve"><value>Nimi:</value></data>
+  <data name="AddAgeLabel" xml:space="preserve"><value>Vanus:</value></data>
+  <data name="AddTypeLabel" xml:space="preserve"><value>Tüüp:</value></data>
+  <data name="AddButton" xml:space="preserve"><value>Lisa loom</value></data>
+
+  <!-- Combo items (Tag used for logic; Content shown to user) -->
+  <data name="Combo_Cat" xml:space="preserve"><value>Cat</value></data>
+  <data name="Combo_Dog" xml:space="preserve"><value>Dog</value></data>
+  <data name="Combo_Monkey" xml:space="preserve"><value>Monkey</value></data>
+  <data name="Combo_Sheep" xml:space="preserve"><value>Sheep</value></data>
+  <data name="Combo_Pig" xml:space="preserve"><value>Pig</value></data>
+  <data name="Combo_Horse" xml:space="preserve"><value>Horse</value></data>
+  <data name="Combo_Duck" xml:space="preserve"><value>Duck</value></data>
+  <data name="Combo_Bear" xml:space="preserve"><value>Bear</value></data>
+
+  <!-- Messages -->
+  <data name="PleaseEnterValidName" xml:space="preserve"><value>Please enter a valid name!</value></data>
+  <data name="PleaseEnterValidNumberAge" xml:space="preserve"><value>Please enter a valid number for age!</value></data>
+  <data name="AgeRangeError" xml:space="preserve"><value>Age must be between 1 and 100!</value></data>
+  <data name="PleaseSelectAnimalType" xml:space="preserve"><value>Please select an animal type!</value></data>
+  <data name="UnknownAnimalType" xml:space="preserve"><value>Unknown animal type!</value></data>
+  <data name="InputErrorTitle" xml:space="preserve"><value>Input Error</value></data>
+  <data name="ErrorTitle" xml:space="preserve"><value>Error</value></data>
+
+  <!-- Logs -->
+  <data name="LogSaidFormat" xml:space="preserve"><value>{0} ütles: {1}</value></data>
+  <data name="LogAteFormat" xml:space="preserve"><value>{0} sõi {1}</value></data>
+  <data name="NoCrazyActionFormat" xml:space="preserve"><value>{0} ei tee crazy action.</value></data>
+
+  <!-- Animal sounds / crazy actions -->
+  <data name="Cat_Sound" xml:space="preserve"><value>Meow!</value></data>
+  <data name="Cat_ActCrazy" xml:space="preserve"><value>{0} varastas köögist juustu!</value></data>
+
+  <data name="Dog_Sound" xml:space="preserve"><value>Woof!</value></data>
+  <data name="Dog_ActCrazy" xml:space="preserve"><value>{0} haugub 5 korda järjest: Woof! Woof! Woof! Woof! Woof!</value></data>
+
+  <data name="Monkey_Sound" xml:space="preserve"><value>Oo-oo-aa-aa!</value></data>
+  <data name="Monkey_ActCrazy" xml:space="preserve"><value>{0} vahetas kahe looma nimed omavahel!</value></data>
+
+  <data name="Sheep_Sound" xml:space="preserve"><value>Baa!</value></data>
+  <data name="Sheep_ActCrazy" xml:space="preserve"><value>{0} jooksis ringi nagu hull lammas!</value></data>
+
+  <data name="Pig_Sound" xml:space="preserve"><value>Oink!</value></data>
+  <data name="Pig_ActCrazy" xml:space="preserve"><value>{0} veeres mudas ringi!</value></data>
+
+  <data name="Horse_Sound" xml:space="preserve"><value>Neigh!</value></data>
+  <data name="Horse_ActCrazy" xml:space="preserve"><value>{0} started galloping in circles!</value></data>
+
+  <data name="Duck_Sound" xml:space="preserve"><value>Quack! Quack!</value></data>
+  <data name="Duck_ActCrazy" xml:space="preserve"><value>{0} flapped its wings and splashed water everywhere!</value></data>
+
+  <data name="Bear_Sound" xml:space="preserve"><value>Grrrrr!</value></data>
+  <data name="Bear_ActCrazy" xml:space="preserve"><value>{0} rolled on the ground and scared everyone!</value></data>
+
+</root>

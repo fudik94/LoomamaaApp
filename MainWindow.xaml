@@ -1,0 +1,58 @@
+<Window x:Class="LoomamaaApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:resx="clr-namespace:LoomamaaApp.Properties"
+        Title="{x:Static resx:Resources.AppTitle}" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="0" Grid.Row="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                <TextBlock Text="Voljeerid:" FontWeight="Bold" Margin="0,0,0,4"/>
+                <ListBox x:Name="EnclosuresListBox" ItemsSource="{Binding Enclosures}" SelectedItem="{Binding SelectedEnclosure, Mode=TwoWay}" DisplayMemberPath="Name" Height="46" SelectionChanged="EnclosuresListBox_SelectionChanged"/>
+            </StackPanel>
+
+            <ListBox x:Name="AnimalsListBox" Grid.Row="1" ItemsSource="{Binding SelectedEnclosure.Animals}" SelectedItem="{Binding SelectedAnimal, Mode=TwoWay}" Margin="0,8,0,0"/>
+        </Grid>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="5" VerticalAlignment="Top">
+            <TextBlock Text="{x:Static resx:Resources.NameLabel}" FontWeight="Bold"/>
+            <TextBlock x:Name="NameTextBlock" Margin="0,0,0,5" Text="{Binding SelectedAnimal.Name, TargetNullValue=''}"/>
+            <TextBlock Text="{x:Static resx:Resources.AgeLabel}" FontWeight="Bold"/>
+            <TextBlock x:Name="AgeTextBlock" Margin="0,0,0,10" Text="{Binding SelectedAnimal.Age, TargetNullValue=''}"/>
+
+            <TextBlock Text="{x:Static resx:Resources.FoodLabel}" FontWeight="Bold"/>
+            <TextBox x:Name="FoodTextBox" Width="200" Margin="0,0,0,5" Text="{Binding FoodInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <WrapPanel Margin="0,5,0,5">
+                <Button Content="{x:Static resx:Resources.MakeSoundButton}" Command="{Binding MakeSoundCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="{x:Static resx:Resources.FeedButton}" Command="{Binding FeedCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
+            </WrapPanel>
+            <WrapPanel Margin="0,5,0,5">
+                <Button Content="{x:Static resx:Resources.AddAnimalButton}" Command="{Binding AddAnimalCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="{x:Static resx:Resources.RemoveAnimalButton}" Command="{Binding RemoveAnimalCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="{x:Static resx:Resources.CrazyActionButton}" Background="#FF91C788" Command="{Binding CrazyActionCommand}" Margin="0,0,5,0"/>
+                <Button Content="Night" Command="{Binding TriggerNightCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
+                <Button Content="LINQ" Command="{Binding OpenLinqCommand}" Background="#FF91C788" Margin="0,0,5,0"/>
+            </WrapPanel>
+            <WrapPanel Margin="0,5,0,5">
+                <Button Content="Save to DB" Command="{Binding SaveToDatabaseCommand}" Background="#FF88B4D6" Margin="0,0,5,0"/>
+                <Button Content="Load from DB" Command="{Binding LoadFromDatabaseCommand}" Background="#FF88B4D6"/>
+            </WrapPanel>
+        </StackPanel>
+
+        <ListBox x:Name="LogListBox" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" ItemsSource="{Binding Logs}"/>
+    </Grid>
+</Window>
